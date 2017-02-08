@@ -1,12 +1,12 @@
 # Pythonklasse
-__author__ = "Rob Knight, Gavin Huttley, and Peter Maxwell"
+__author__ = "Stephan Psenner, Hendrik Schulz, Hannes Grefe und Ingo Fiedler"
 __copyright__ = "Copyright 2017, The Drive Project"
-__credits__ = ["Rob Knight", "Peter Maxwell", "Gavin Huttley",
-                    "Matthew Wakefield"]
+__credits__ = ["Stephan Psenner", "Hendrik Schulz", "Hannes Grefe",
+               "Ingo Fiedler"]
 __license__ = "GPL"
 __version__ = "0.1"
 __maintainer__ = "Ingo Fiedler"
-__email__ = "rob@spot.colorado.edu"
+__email__ = "xxx"
 __status__ = "Development"
 
 # Import der benötigten Module
