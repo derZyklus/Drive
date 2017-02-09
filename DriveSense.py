@@ -30,10 +30,17 @@ class DriveSense:
         self.sense.show_message("Drive " + __version__ )
 
     def ShowCountdown(self):
+        """ Fuert einen Countdown durch und zaehlt von 10 runter """
         for i in reversed(range(0, 10)):
             self.sense.show_letter(str(i))
             time.sleep(1)
         self.sense.clear()
+
+    def WaitForButton(self):
+        for event in self.sense.stick.get_events():
+            if event.action == "pressed" and event.direction == "middle" :
+                return True
+        return False
 
     def SageHallo(self):
         print("Hallo Ingo {}".format(self.KONST))
