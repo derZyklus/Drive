@@ -37,21 +37,18 @@ xx = True
 while xx:
     # Alle 10ms ausführen
     if (pt.ticks % 10) == 0:
-        #print('Task 10ms')
         test = 0
 
     # Alle 50ms ausführen
     if pt.get_ticks() % 50 == 0:
-        print('Task 50ms')
+        test = 0
 
     # Alle 100ms ausführen
     if (pt.ticks % 100) == 0:
-        #print('Task 100ms')
         test = 0
 
     # Alle 1s ausführen
     if pt.ticks >= 1000:
-        print('Task 1s')
-        pt.reset()
+        pt.reset() # Zähler für die Ticks wieder auf 0 setzen
 
     time.sleep(0.005)
