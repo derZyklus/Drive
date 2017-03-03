@@ -36,6 +36,24 @@ class DriveSense:
             time.sleep(1)
         self.sense.clear()
 
+    def show_arrow(self, fg, bg):
+        """
+        Gibt den Pfeil für die Richtungsangabe aus
+        :param fg: Farbe des Vordergrundes (Pfeil)
+        :param bg: Hintergrundfarbe
+        """
+        arrow = [
+            bg, bg, bg, fg, bg, bg, bg, bg,
+            bg, bg, fg, bg, bg, bg, bg, bg,
+            bg, fg, bg, bg, bg, bg, bg, bg,
+            fg, fg, fg, bg, bg, bg, bg, bg,
+            fg, fg, fg, bg, bg, bg, bg, bg,
+            bg, fg, bg, bg, bg, bg, bg, bg,
+            bg, bg, fg, bg, bg, bg, bg, bg,
+            bg, bg, bg, fg, bg, bg, bg, bg
+        ]
+        self.sense.set_pixels(arrow)
+    
     def WaitForButton(self):
         for event in self.sense.stick.get_events():
             if event.action == "pressed" and event.direction == "middle" :

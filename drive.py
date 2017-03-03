@@ -5,19 +5,28 @@ from time import sleep
 import time
 from periodic_timer import PeriodicTimer
 
+# Definition der LED-Farben
+Re = [255, 0, 0]  # Red
+Gr = [0, 255, 0]  # Green
+Bl = [0, 0, 255]  # Blue
+Wh = [255, 255, 255]  # White
+Bk = [0, 0, 0]  # Black (BkFF)
+
+
 ds = DriveSense()
 
 ds.Set_TxtSpeed(1)
 
 # Startmeldung ausgeben und Pfeil für die korrekte Einbaulage anzeigen
-#ds.ShowWelcomeMsg()
+ds.ShowWelcomeMsg()
+ds.show_arrow(Re, Bk)
 
 # Warten bis Benutzer bereit ist und Button gedrückt hat
-#while ds.WaitForButton() == False:
-#    sleep(0.1)
+while ds.WaitForButton() == False:
+    sleep(0.1)
 
 # Countdown durchführen und dann starten...
-#ds.ShowCountdown()
+ds.ShowCountdown()
 
 
 pt = PeriodicTimer(0.005)
