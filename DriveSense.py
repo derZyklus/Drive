@@ -12,6 +12,9 @@ __status__ = "Development"
 # Import der benötigten Module
 from sense_hat import SenseHat
 import time
+import math
+import os
+import sys
 
 class DriveSense:
 
@@ -60,8 +63,20 @@ class DriveSense:
                 return True
         return False
 
-    def SageHallo(self):
-        print("Hallo Ingo {}".format(self.KONST))
+    def get_z_value(self):
+        #pitch = self.sense.gyroscope['pitch'] - 270 # in Grad
+        #pitch = self.sense.get_orientation_degrees()
+        #pitch = pitch * 3.141592654 / 180
+        return self.sense.accelerometer_raw['z']
+
+    def check_temperature(self, limit):
+        """ ttt """
+        if self.sense.get_temperature() < limit:
+            return
+        self.sense.show_message("Hot! Bye", scroll_speed=0.05, text_colour=[255, 0, 0])
+        self.sense.clear()
+        os.system("sudo shutdown -h now")
+        sys.exit()
 
 if __name__ == "__main__":
     x = DriveSense()
