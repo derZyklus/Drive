@@ -71,12 +71,13 @@ class DriveSense:
 
     def check_temperature(self, limit):
         """ ttt """
-        if self.sense.get_temperature() < limit:
-            return
-        self.sense.show_message("Hot! Bye", scroll_speed=0.05, text_colour=[255, 0, 0])
-        self.sense.clear()
-        os.system("sudo shutdown -h now")
-        sys.exit()
+        if self.sense.get_temperature() > limit:
+            self.sense.show_message("Hot! Bye", scroll_speed=0.05, text_colour=[255, 0, 0])
+            self.sense.clear()
+            os.system("sudo shutdown -h now")
+            sys.exit()
+
+
 
 if __name__ == "__main__":
     x = DriveSense()
