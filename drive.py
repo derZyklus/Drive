@@ -80,12 +80,12 @@ while xx:
         calc_Brake.calc_Result()
         calc_Curve.calc_MeanValue()
         calc_Curve.calc_Result()
-        print("Brake: {0}".format(calc_Brake.get_MeanValue()))
-        print("Curve: {0}".format(calc_Curve.get_MeanValue()))
+        #print("Brake: {0}".format(calc_Brake.get_MeanValue()))
+        #print("Curve: {0}".format(calc_Curve.get_MeanValue()))
         #print("Orginal Wert: {0}".format(wert))
 
     # Alle 500 ms ausführen
-    if (pt.ticks % 2000) == 0:
+    if (pt.ticks % 500) == 0:
         for event in ds.sense.stick.get_events():
             if event.action == 'pressed':
                 is_pressed = True
