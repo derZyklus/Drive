@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Hauptprogramm des Projektes Drive
 from DriveSense import DriveSense
+from sense_hat import ACTION_PRESSED, ACTION_RELEASED
 from time import sleep
 import time
 from periodic_timer import PeriodicTimer
@@ -53,16 +54,18 @@ xx = True
 t_schwelle = 0 # Ein kleiner Timer für die 0,05g Schwelle
 z_count = 0
 z_mean_value = 0
+n_shutdown = 0
+is_pressed = False
 
 while xx:
     # Alle 20ms ausführen
     if (pt.ticks % 20) == 0:
         zvalue = ds.get_z_value()
         if zvalue > 0:
-            calc_Acc.add_value(ds.get_z_value())
+            calc_Acc.add_value(zvalue)
         else:
-            calc_Brake.add_value(ds.get_z_value())
-        calc_Curve.add_value(ds.get_z_value())
+            calc_Brake.add_value(abs(zvalue))
+        calc_Curve.add_value(abs(ds.get_y_value()))
 
     # Alle 100ms ausführen
     if pt.ticks % 100 == 0:
@@ -78,13 +81,18 @@ while xx:
 
     # Alle 500 ms ausführen
     if (pt.ticks % 500) == 0:
-        test = 0
-        #orientation = ds.sense.get_orientation_degrees()
-        #print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
-        #raw = ds.sense.get_accelerometer_raw()
-        #print("x: {x}, y: {y}, z: {z}".format(**raw))
-        #print("Orginal Wert: {0}".format(ds.get_z_value()))
-
+        for event in ds.sense.stick.get_events():
+            if event.action == 'pressed':
+                is_pressed = True
+            elif event.action == 'released':
+                is_pressed = False
+        if is_pressed:
+            n_shutdown += 1
+        else:
+            n_shutdown = 0
+        print("Wert {0}".format(n_shutdown))
+        if n_shutdown >= 2:
+            ds.shutdown()
 
     # Alle 1s ausführen
     if pt.ticks >= 1000:
