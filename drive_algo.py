@@ -2,7 +2,6 @@ from numpy import *
 from sense_hat import SenseHat
 
 class DriveAlgo():
-
     def __init__(self,nMeanValues, line):
         """
         Konstruktor der Klasse.
@@ -15,10 +14,11 @@ class DriveAlgo():
         self.resultIndex = 0
         self.resultMeanValue = 0.0
         self.sh = SenseHat()
-        self.anzeige = 0
+        self.anzeige = 8
         self.line = line
 
     def add_value(self,value):
+        """ Kommentar """
         self.dataList[self.listIndex] = value
         self.listIndex += 1
         if self.listIndex >= self.nMeanValues:
@@ -51,7 +51,7 @@ class DriveAlgo():
             else:
                 self.anzeige -= 3
             if self.anzeige > 8:
-                self.anzeige = 0
+                self.anzeige = 8
             else:
                 if self.anzeige < 0:
                     self.anzeige = 0
@@ -82,3 +82,6 @@ class DriveAlgo():
         for i in range(0, 8):
             self.sh.set_pixel(i, 2, [0, 0, 0])
             self.sh.set_pixel(i, 5, [0, 0, 0])
+
+if __name__ == "__main__":
+    x = DriveSense()

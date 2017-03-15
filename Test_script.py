@@ -3,7 +3,7 @@
 from DriveSense import DriveSense
 from sense_hat import ACTION_PRESSED, ACTION_RELEASED
 from time import sleep
-import time
+import csv
 from periodic_timer import PeriodicTimer
 from drive_algo import DriveAlgo
 
@@ -31,7 +31,7 @@ ds.sense.low_light = True
 ds.sense.set_rotation(270)
 
 # Startmeldung ausgeben und Pfeil für die korrekte Einbaulage anzeigen
-ds.ShowWelcomeMsg()
+#ds.ShowWelcomeMsg()
 ds.show_arrow(Re, Bk)
 
 # Warten bis Benutzer bereit ist und Button gedrückt hat
@@ -41,14 +41,16 @@ ds.show_arrow(Re, Bk)
 # Countdown durchführen und dann starten...
 #ds.ShowCountdown()
 
-pt = PeriodicTimer(0.005)
-pt.start()
+#pt = PeriodicTimer(0.005)
+#pt.start()
 #           1  2  3  4  5  6  7  8  9 10
 #dataList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 #dataList = zeros(5)
 index = 0
 oIndex = 0
 
+test_counter = 0
+ds.sense.clear()
 # Hier der Main-Task
 xx = True
 t_schwelle = 0 # Ein kleiner Timer für die 0,05g Schwelle
@@ -57,52 +59,36 @@ z_mean_value = 0
 n_shutdown = 0
 is_pressed = False
 
-# Bar-Graph auf Ausgangswerte setzen
+fileObj = open('Test_Data.csv')
+csvReader = csv.reader(fileObj)
+
 calc_Acc.show_bar_graph(calc_Acc.anzeige, Line_Acc)
 calc_Brake.show_bar_graph(calc_Brake.anzeige, Line_Brake)
 calc_Curve.show_bar_graph(calc_Curve.anzeige, Line_Curve)
 
-while xx:
-    # Alle 20ms ausführen
-    if (pt.ticks % 20) == 0:
-        zvalue = ds.get_z_value()
-        if zvalue > 0:
-            calc_Acc.add_value(zvalue)
-        else:
-            calc_Brake.add_value(abs(zvalue))
-        calc_Curve.add_value(abs(ds.get_y_value()))
-
+for row in csvReader:
+    #print("Wert3: {0}".format(row[3]))
+    #print("Wert2: {0}".format(row[2]))
+    zvalue = float(row[3])
+    if zvalue > 0:
+        calc_Acc.add_value(zvalue)
+    else:
+        calc_Brake.add_value(abs(zvalue))
+    calc_Curve.add_value(abs(float(row[2])))
+    sleep(0.02)
     # Alle 100ms ausführen
-    if pt.ticks % 100 == 0:
+    if test_counter == 4:
         calc_Acc.calc_MeanValue()
         calc_Acc.calc_Result()
+        print("Acc {0}:".format(calc_Acc.get_MeanValue()))
         calc_Brake.calc_MeanValue()
         calc_Brake.calc_Result()
         calc_Curve.calc_MeanValue()
         calc_Curve.calc_Result()
-        print("Brake: {0}".format(calc_Brake.get_MeanValue()))
-        print("Curve: {0}".format(calc_Curve.get_MeanValue()))
-        #print("Orginal Wert: {0}".format(wert))
+        print("Curve {0}:".format(calc_Curve.get_MeanValue()))
 
-    # Alle 500 ms ausführen
-    if (pt.ticks % 2000) == 0:
-        for event in ds.sense.stick.get_events():
-            if event.action == 'pressed':
-                is_pressed = True
-            elif event.action == 'released':
-                is_pressed = False
-        if is_pressed:
-            n_shutdown += 1
-        else:
-            n_shutdown = 0
-        print("Wert {0}".format(n_shutdown))
-        if n_shutdown >= 2:
-            ds.shutdown()
+    test_counter += 1
+    if test_counter >= 5:
+        test_counter = 0
 
-    # Alle 1s ausführen
-    if pt.ticks >= 1000:
-        pt.reset() # Zähler für die Ticks wieder auf 0 setzen
-        #ds.check_temperature(65)
-
-    # Hier eventuell Berechnen wie lange die einzelnen Tasks dauern
-    #time.sleep(0.005)
+fileObj.close()
