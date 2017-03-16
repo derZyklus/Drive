@@ -35,8 +35,9 @@ ds.ShowWelcomeMsg()
 ds.show_arrow(Re, Bk)
 
 # Warten bis Benutzer bereit ist und Button gedrückt hat
-#while ds.WaitForButton() == False:
-#    sleep(0.1)
+while ds.WaitForButton() == False:
+    sleep(0.1)
+ds.sense.clear()
 
 # Countdown durchführen und dann starten...
 #ds.ShowCountdown()
@@ -95,7 +96,7 @@ while xx:
             n_shutdown += 1
         else:
             n_shutdown = 0
-        print("Wert {0}".format(n_shutdown))
+        #print("Wert {0}".format(n_shutdown))
         if n_shutdown >= 2:
             ds.shutdown()
 

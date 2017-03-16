@@ -95,6 +95,7 @@ class DriveSense:
         self.sense.set_pixels(Symbol)
         time.sleep(2)
         self.sense.clear()
+        time.sleep(0.02)
         os.system("sudo shutdown -h now")
         sys.exit()
 
