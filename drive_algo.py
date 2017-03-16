@@ -66,7 +66,6 @@ class DriveAlgo():
         return self.meanValue
 
     def show_bar_graph(self, output, line):
-        self.sh.clear() #
         # Farbauswahl nach Wert
         if output > 4:
             colour = [0, 255, 0]
