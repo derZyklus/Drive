@@ -32,13 +32,14 @@ ds.sense.set_rotation(270)
 
 # Startmeldung ausgeben und Pfeil für die korrekte Einbaulage anzeigen
 ds.ShowWelcomeMsg()
+ds.sense.set_rotation(0)
 ds.show_arrow(Re, Bk)
 
 # Warten bis Benutzer bereit ist und Button gedrückt hat
 while ds.WaitForButton() == False:
     sleep(0.1)
 ds.sense.clear()
-
+ds.sense.set_rotation(270)
 # Countdown durchführen und dann starten...
 #ds.ShowCountdown()
 

@@ -14,6 +14,7 @@ class DriveAlgo():
         self.resultIndex = 0
         self.resultMeanValue = 0.0
         self.sh = SenseHat()
+        #self.sh.set_rotation(270)
         self.anzeige = 8
         self.line = line
 

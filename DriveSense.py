@@ -31,7 +31,8 @@ class DriveSense:
         
     def ShowWelcomeMsg(self):
         """ Gibt die Startnachticht aus """
-        self.sense.show_message("Drive " + __version__ )
+        #self.sense.show_message("Drive " + __version__ )
+        self.sense.show_message("Drive")
 
     def ShowCountdown(self):
         """ Fuert einen Countdown durch und zaehlt von 10 runter """
