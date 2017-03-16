@@ -97,8 +97,12 @@ while xx:
             n_shutdown += 1
         else:
             n_shutdown = 0
+        if n_shutdown == 1:
+            ds.sense.show_letter('2')
+        elif n_shutdown == 3:
+            ds.sense.show_letter('1')
         #print("Wert {0}".format(n_shutdown))
-        if n_shutdown >= 2:
+        if n_shutdown >= 4:
             ds.shutdown()
 
     # Alle 1s ausführen
